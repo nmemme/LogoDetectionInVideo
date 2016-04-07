@@ -139,62 +139,39 @@ if __name__ == '__main__':
     while( True ):
         # Capture frame-by-frame, each frame is 1080 pixels
         ret, frame = cap.read()
-        orig = frame
-        # print frame.shape
 
-        # update ROI every 5 frames
-        if count % 3 == 0:
-            pic = frame
-            '''
-            for i in range(3):
-                lower = cv2.pyrDown(pic)
-                pic = lower
-            '''
-            gray_trg = cv2.cvtColor(pic, cv2.COLOR_BGR2GRAY)
-            kp2, des2 = sift.detectAndCompute(gray_trg, None)
-            if des2 is not None:
-                matches = bf.knnMatch(des1, des2, k=2)
-                if matches is not None:
-                    # print "matches", matches
-                    kp_trg = bf_knnmatches(matches, img)
+        pic = frame
+        gray_trg = cv2.cvtColor(pic, cv2.COLOR_BGR2GRAY)
+        kp2, des2 = sift.detectAndCompute(gray_trg, None)
+        if des2 is not None:
+            matches = bf.knnMatch(des1, des2, k=2)
+            if matches is not None:
+                # print "matches", matches
+                kp_trg = bf_knnmatches(matches, img)
 
-                    # if not detecting logo in the image, just skip the tracking and show the original frame.
-                    if len(kp_trg) >= 4:
-                        roiPts = np.array(kp_trg)
-                        s = roiPts.sum(axis=1)
-                        print "kkkp", kp_trg
-                        print "ssssss", s
-                        tl, ld, ru, br = extrct_ROI(s)
-                        print "tl", tl
-                        print "br", br
-                        roi = orig[tl[1]:br[1], tl[0]:br[0]]
-                        roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-                        roiHist = cv2.calcHist([roi], [0], None, [16], [0, 180])
-                        roiHist = cv2.normalize(roiHist, roiHist, 0, 255, cv2.NORM_MINMAX)
-                        roiBox = (tl[0], tl[1], br[0], br[1])
-                        # initialize the termination criteria for cam shift, indicating
-                        # a maximum of ten iterations or movement by a least one pixel
-                        # along with the bounding box of the ROI
-                        termination = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
-                        # print "jajajja",roiBox
+                # if not detecting logo in the image, just skip the tracking and show the original frame.
+                if len(kp_trg) >= 4:
+                    roiPts = np.array(kp_trg)
+                    s = roiPts.sum(axis=1)
+                    print "kkkp", kp_trg
+                    print "ssssss", s
+                    tl, ld, ru, br = extrct_ROI(s)
+
+                    print "tl", tl
+                    print "br", br
+                    roiBox = (tl[0], tl[1], br[0], br[1])
+                    Box = [np.int32([ld, tl, ru, br])]
+                else: roiBox = None
+            else: roiBox = None
+        else: roiBox = None
+
 
 
 
         if roiBox is not None:
-            # print "dsdfsdfs"
-            # convert the current frame to the HSV color space
-            # and perform mean shift
-            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-            backProj = cv2.calcBackProject([hsv], [0], roiHist, [0, 180], 1)
-            # apply cam shift to the back projection, convert the
-            # points to a bounding box, and then draw them
-            print "roiBox", roiBox
-            print "bbbbbb", backProj
-            print "ttttttt", termination
             if min(roiBox) > 0:
-                (r, roiBox) = cv2.CamShift(backProj, roiBox, termination)
-                pts = np.int0(cv2.boxPoints(r))
-                frame = cv2.polylines(frame, [np.int32(kp_trg)], True, 255, 3, cv2.LINE_AA)
+                frame = cv2.polylines(frame, Box, True, 255, 3, cv2.LINE_AA)
+                # ld,lu,ru,rd
 
         # Display the resulting frame
         cv2.imshow('frame', frame)
