@@ -103,10 +103,10 @@ def bf_knnmatches( matches, img, kp1, kp2):
 def logo_des(path):
     sift = cv2.xfeatures2d.SIFT_create()
     os.chdir(path)
-    a = os.listdir(".")
+    b = os.listdir(".")
     kp1 = []
     des1 = []
-    a = a[1:-1]
+    a = b[1:len(b)-1]
     for i in a:
         img = cv2.imread(i, 0)
         # des is a matrix with 33 key points * 128 feature vectors,kp contains x & y
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     # read in whole dataset here !
     # use sift to extract kp & des
     sift = cv2.xfeatures2d.SIFT_create()
-    path = "/Users/muyunyan/Documents/Pycharm/EC500sprint3/DHL"
+    path = "/Users/muyunyan/Documents/Pycharm/EC500sprint3/DHL0"
     kp1, des1 = logo_des(path)
     cap = cv2.VideoCapture('DHL.mp4')
     count = 0
@@ -173,7 +173,9 @@ if __name__ == '__main__':
                             roiHistt.append(roiHist)
                             roiBox .append([tl[0], tl[1], br[0], br[1]])
                             termination .append((cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1))
+                    print index1
                     index1 += 1
+
             os.chdir("..")
 
         if len(roiBox) > 0:
@@ -188,7 +190,7 @@ if __name__ == '__main__':
                 if min(roiBox[kk]) > 0:
                     (r, roiBox[kk]) = cv2.CamShift(backProj, roiBox[kk], termination[kk])
                     pts = np.int0(cv2.boxPoints(r))
-                    frame = cv2.polylines(frame, [np.int32(kp_trg)], True, 255, 3, cv2.LINE_AA)
+                    frame = cv2.rectangle(frame, (roiBox[kk][0],roiBox[kk][1]), (roiBox[kk][2],roiBox[kk][3]), (0,255,0), 3)
         # Display the resulting frame
         cv2.imshow('frame', frame)
 
