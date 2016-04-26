@@ -11,7 +11,6 @@ pip install sklearn
 pip install scipy
 git clone https://github.com/nmemme/LogoDetectionInVideo.git
 cd LogoDetectionInVideo/
-git checkout logo_detection
 ```
 
 
