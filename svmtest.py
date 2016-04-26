@@ -7,7 +7,7 @@ training_set=[]
 training_labels=[]
 os.chdir("FlickrLogos-v2/classes/jpg")
 counter=0
-a=['dhl','starbucks','no-logo']
+a=os.listdir(".")
 for i in a:
  os.chdir(i)
  print(i)
@@ -23,28 +23,24 @@ for i in a:
      training_set.append(flat_arr)
      training_labels.append(i)
      counter+=1
-     if(i=='no-logo' and counter==50):
+     if(counter==5):
+         os.chdir("..")
+         counter=0
          break
-     #if(counter==5):
- os.chdir("..")
- counter=0
-         #break
        
 
 trainData=training_set
 responses=training_labels
 svm = svm.SVC()
 svm.fit(trainData,responses)
-os.chdir("c:/Python27/DHL")
-x=['dhl.jpg','dhl2.jpg','starbucks.png','starbucks2.png']
+os.chdir("c:/Python27")
+x=['apple.png','google.jpg','ad.jpg']
 #os.chdir("FlickrLogos-v2/classes/jpg/apple")
 testing=[]
 for i in x:
-    print(i)
+
     img = cv2.imread(i)
-
     res=cv2.resize(img,(250,250))
-
     gray_image = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
     xarr=np.squeeze(np.array(gray_image).astype(np.float32))
     m,v=cv2.PCACompute(xarr)
@@ -52,6 +48,5 @@ for i in x:
     flat_arr= arr.ravel()
 
     testing.append(flat_arr)
-
 
 print(svm.predict(testing))
