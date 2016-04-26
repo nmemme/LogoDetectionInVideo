@@ -28,3 +28,4 @@ python detectMultiLogo_cam.py starbucks apple
 * run button: detect what logo is inside the video 
 * process button: blur the logo that you choose on the webpage
 * download button: download the video
+* test/resault sample video dropbox link: https://www.dropbox.com/sh/dw3kycb4wbu9667/AAD4R4UDSedIbC-Ka5rG_-ava?dl=0
