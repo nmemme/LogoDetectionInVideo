@@ -16,7 +16,15 @@ git checkout logo_detection
 
 
 ## Running Logo Detection
+* Will process with the video in "video_path" inside of the code
 ```bash
 python detectMultiLogo_cam.py starbucks apple
 
 ```
+
+## Running Web Application
+Type in IP address in the address bar: 52.87.178.82::5901
+upload button: upload the video
+run button: detect what logo is inside the video 
+process button: blur the logo that you choose on the webpage
+download button: download the video
