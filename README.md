@@ -26,7 +26,7 @@ python detectMultiLogo_cam.py starbucks apple
 ![ip_address](https://cloud.githubusercontent.com/assets/16805638/14926616/f7644594-0e1a-11e6-9b34-15c7bdc13257.png)
 
 * Upload button: Click Choose File button and name of uploading video file should be appeared on right.  Then, click upload button to upload the video.
-![upload_button_](https://cloud.githubusercontent.com/assets/16805638/14926784/eb98b0d2-0e1b-11e6-86a6-69e71d78d277.png)
+![upload_button_final](https://cloud.githubusercontent.com/assets/16805638/14927716/8448982e-0e21-11e6-9e12-33b084eb1e22.png)
 
 * Run button: Click run button to detect what logo is inside the video.
 ![run_button_edit_](https://cloud.githubusercontent.com/assets/16805638/14926806/176cd88c-0e1c-11e6-9d34-c85a8174b9b5.png)
