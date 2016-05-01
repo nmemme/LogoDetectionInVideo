@@ -1,5 +1,9 @@
 # LogoDetectionInVideo
 
+## Introduction
+Logo detection in video is a web application which can help self-movie maker or video processor to detect logo that appear in the video and also personalized remove them. Due to the running time, we recommand the tester to run code on your own laptop with opencv3 & python intalled.
+Also remember to change the path of video and image folder before you run it.
+
 ## Install instructions
 
 Setup OpenCV3 
